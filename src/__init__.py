@@ -1,0 +1,1 @@
+"""Concordium Agent Sentinel package."""

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConcordiumCIS8004AgentCard",
+  "description": "Standardized Agent Card schema conforming to Concordium CIS-8004 and cross-chain ERC-8004 specifications with Zero-Knowledge human accountability proofs.",
+  "type": "object",
+  "required": [
+    "agent_did",
+    "name",
+    "version",
+    "chain_id",
+    "verified_by_concordium",
+    "accountable_human",
+    "supported_protocols",
+    "payment_rails",
+    "compliance"
+  ],
+  "properties": {
+    "agent_did": {
+      "type": "string",
+      "pattern": "^did:ccd:(testnet|mainnet):agent:[0-9a-fA-F]{40,64}$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "chain_id": {
+      "type": "string"
+    },
+    "verified_by_concordium": {
+      "type": "object",
+      "required": ["status", "badge_id", "issued_at", "verification_tier", "proof_type", "zk_commitment"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["VERIFIED", "REVOKED", "PENDING"]
+        },
+        "badge_id": {
+          "type": "string"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "verification_tier": {
+          "type": "string",
+          "enum": ["TIER_1_ID_PROVED", "TIER_2_ENTERPRISE_LEI", "UNVERIFIED"]
+        },
+        "proof_type": {
+          "type": "string",
+          "enum": ["Groth16_Concordium_ID", "Pedersen_Commitment_ZKP"]
+        },
+        "zk_commitment": {
+          "type": "string"
+        }
+      }
+    },
+    "accountable_human": {
+      "type": "object",
+      "required": ["concordium_id_credential", "anonymity_revoker_quorum", "accountability_signature"],
+      "properties": {
+        "concordium_id_credential": {
+          "type": "string"
+        },
+        "anonymity_revoker_quorum": {
+          "type": "string"
+        },
+        "accountability_signature": {
+          "type": "string"
+        }
+      }
+    },
+    "supported_protocols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "payment_rails": {
+      "type": "object",
+      "required": ["x402_enabled", "accepted_assets", "sponsor_service_url"],
+      "properties": {
+        "x402_enabled": {
+          "type": "boolean"
+        },
+        "accepted_assets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "sponsor_service_url": {
+          "type": "string"
+        }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "required": ["eu_ai_act_article_12", "audit_log_format", "immutable_merkle_root"],
+      "properties": {
+        "eu_ai_act_article_12": {
+          "type": "boolean"
+        },
+        "audit_log_format": {
+          "type": "string"
+        },
+        "immutable_merkle_root": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
